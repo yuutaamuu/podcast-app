@@ -10,13 +10,20 @@ import {
 } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 
+type Data = {
+  title: string;
+  comment: string;
+};
+
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  title?: string;
+  comment?: string;
 };
 
 export const ModalCard: VFC<Props> = memo((props) => {
-  const { isOpen, onClose } = props;
+  const { isOpen, onClose, title, comment } = props;
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
       <ModalOverlay />
@@ -31,8 +38,8 @@ export const ModalCard: VFC<Props> = memo((props) => {
               borderRadius="lg"
               src="https://source.unsplash.com/random"
             />
-            <Text fontSize="2xl">title</Text>
-            <Text>commentcommentcomment</Text>
+            <Text fontSize="2xl">{title}</Text>
+            <Text>{comment}</Text>
           </Stack>
         </ModalBody>
       </ModalContent>

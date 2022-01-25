@@ -2,28 +2,33 @@ import { Box, Button, Image, Stack, Text } from "@chakra-ui/react";
 import { memo, VFC } from "react";
 
 type Data = {
+  id: number;
   img: string;
   title: string;
-  onOpen: () => void;
+  onClickModal: (id: number) => void;
 };
 
 export const Card: VFC<Data> = memo((props) => {
-  const { img, title, onOpen } = props;
+  const { id, img, title, onClickModal } = props;
   return (
     <Box
-      w={{ base: "45%", md: "30%" }}
+      w={{ base: "100%", sm: "45%", md: "30%" }}
       height="400px"
       border="1px solid gray"
-      align="center"
       py={8}
       borderRadius="16px"
       boxShadow="lg"
       mt={4}
     >
-      <Stack spacing={8}>
-        <Image w="200px" height="200px" borderRadius="full" src={img} />
+      <Stack spacing={8} align="center">
+        <Image w="200px" h="200px" borderRadius="full" src={img} />
         <Text>{title}</Text>
-        <Button onClick={onOpen} w="50%" bg="teal" color="white">
+        <Button
+          onClick={() => onClickModal(id)}
+          w="50%"
+          bg="teal"
+          color="white"
+        >
           詳しく見る
         </Button>
       </Stack>

@@ -1,7 +1,8 @@
 import { Box, Flex, Heading, useDisclosure } from "@chakra-ui/react";
-import { memo } from "react";
+import { memo, useCallback, VFC } from "react";
 import { Card } from "../molecules/Card";
 import { ModalCard } from "../oganisms/ModalCard";
+import { useGetModal } from "../../hooks/useGetModal";
 
 type Data = {
   id: number;
@@ -10,8 +11,10 @@ type Data = {
   comment: string;
 };
 
-export const TopCardArea = memo(() => {
+export const TopCardArea: VFC = memo(() => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+  const { modalData, getData } = useGetModal();
+
   const datas: Data[] = [
     {
       id: 1,
@@ -38,6 +41,12 @@ export const TopCardArea = memo(() => {
       comment: "うううううう"
     }
   ];
+
+  const onClickModal = useCallback((id: number) => {
+    getData({ id, datas });
+    onOpen();
+  }, []);
+
   return (
     <Box p={6}>
       <Heading as="h2" mb={4}>
@@ -46,14 +55,20 @@ export const TopCardArea = memo(() => {
       <Flex flexWrap="wrap" justify="space-around">
         {datas.map((data) => (
           <Card
-            onOpen={onOpen}
+            onClickModal={onClickModal}
             key={data.id}
+            id={data.id}
             img={data.img}
             title={data.title}
           />
         ))}
       </Flex>
-      <ModalCard isOpen={isOpen} onClose={onClose} />
+      <ModalCard
+        title={modalData?.title}
+        comment={modalData?.comment}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
     </Box>
   );
 });
