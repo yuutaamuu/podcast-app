@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { memo } from "react";
 
+import { ModalNew } from "./ModalNew";
+
 export const TopAbout = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
@@ -31,26 +33,7 @@ export const TopAbout = memo(() => {
       <Center p={8}>
         <Button onClick={onOpen}>新規登録</Button>
       </Center>
-      <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
-        <ModalOverlay />
-        <ModalContent p={8}>
-          <ModalHeader>Modal Title</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Stack spacing={4}>
-              <FormControl>
-                <FormLabel>title</FormLabel>
-                <Input placeholder="タイトルを入力" />
-              </FormControl>
-              <FormControl>
-                <FormLabel>comment</FormLabel>
-                <Input placeholder="コメントを入力" />
-              </FormControl>
-              <Button>登録</Button>
-            </Stack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      <ModalNew isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 });
