@@ -12,7 +12,7 @@ import {
   Stack,
   Text
 } from "@chakra-ui/react";
-import { memo, useCallback, useState, VFC } from "react";
+import { memo, useCallback, useEffect, useState, VFC } from "react";
 
 import { useSaveData } from "../../hooks/useSaveData";
 
@@ -28,8 +28,8 @@ type Store = {
 
 export const ModalNew: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
-  const [inputTitle, setInputTitle] = useState<string>("");
-  const [inputComment, setInputComment] = useState<string>("");
+  const [title, setInputTitle] = useState<string>("");
+  const [comment, setInputComment] = useState<string>("");
 
   const [dataStore, setDataStore] = useState<Array<Store>>([]);
 
@@ -49,15 +49,20 @@ export const ModalNew: VFC<Props> = memo((props) => {
     []
   );
 
-  const onClickSaveData = useCallback(
-    (inputTitle: string, inputComment: string) => {
-      saveData(inputTitle, inputComment);
+  const onClickSaveData = useCallback((title: string, comment: string) => {
+    saveData({ title, comment });
 
-      // setInputTitle("");
-      // setInputComment("");
-    },
-    []
-  );
+    setInputTitle("");
+    setInputComment("");
+  }, []);
+
+  useEffect(() => {
+    const latestData = [...dataStore, newData];
+    setDataStore(latestData);
+    // console.log(latestData);
+  }, [newData]);
+
+  console.log(dataStore);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
@@ -71,7 +76,7 @@ export const ModalNew: VFC<Props> = memo((props) => {
               <FormLabel>title</FormLabel>
               <Input
                 placeholder="タイトルを入力"
-                value={inputTitle}
+                value={title}
                 onChange={handleChangeTit}
               />
             </FormControl>
@@ -79,11 +84,11 @@ export const ModalNew: VFC<Props> = memo((props) => {
               <FormLabel>comment</FormLabel>
               <Input
                 placeholder="コメントを入力"
-                value={inputComment}
+                value={comment}
                 onChange={handleChangeCom}
               />
             </FormControl>
-            <Button onClick={() => onClickSaveData(inputTitle, inputComment)}>
+            <Button onClick={() => onClickSaveData(title, comment)}>
               登録
             </Button>
             <Text>{newData?.title}</Text>
