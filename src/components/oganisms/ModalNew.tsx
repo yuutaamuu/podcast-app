@@ -9,7 +9,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Stack
+  Stack,
+  Text
 } from "@chakra-ui/react";
 import { memo, useCallback, useState, VFC } from "react";
 
@@ -20,13 +21,19 @@ type Props = {
   onClose: () => void;
 };
 
+type Store = {
+  title: string;
+  comment: string;
+};
+
 export const ModalNew: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
   const [inputTitle, setInputTitle] = useState<string>("");
   const [inputComment, setInputComment] = useState<string>("");
 
+  const [dataStore, setDataStore] = useState<Array<Store>>([]);
+
   const { newData, saveData } = useSaveData();
-  console.log(newData);
 
   const handleChangeTit = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +52,9 @@ export const ModalNew: VFC<Props> = memo((props) => {
   const onClickSaveData = useCallback(
     (inputTitle: string, inputComment: string) => {
       saveData(inputTitle, inputComment);
+
+      // setInputTitle("");
+      // setInputComment("");
     },
     []
   );
@@ -76,6 +86,8 @@ export const ModalNew: VFC<Props> = memo((props) => {
             <Button onClick={() => onClickSaveData(inputTitle, inputComment)}>
               登録
             </Button>
+            <Text>{newData?.title}</Text>
+            <Text>{newData?.comment}</Text>
           </Stack>
         </ModalBody>
       </ModalContent>

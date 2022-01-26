@@ -8,7 +8,7 @@ type Data = {
 };
 
 export const useSaveData = () => {
-  const [newData, setNewData] = useState<Data>();
+  const [newData, setNewData] = useState<Data | undefined>();
 
   const saveData = useCallback((title: string, comment: string) => {
     let data: Data = { title: title, comment: comment };
