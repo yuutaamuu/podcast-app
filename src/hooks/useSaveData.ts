@@ -12,7 +12,11 @@ export const useSaveData = () => {
 
   const saveData = useCallback((props: Data) => {
     const { title, comment } = props;
-    let data = { title, comment };
+    const data = {
+      title: title,
+      comment: comment
+    };
+    // let data = { title, comment };
     setNewData(data);
   }, []);
   return { newData, saveData };

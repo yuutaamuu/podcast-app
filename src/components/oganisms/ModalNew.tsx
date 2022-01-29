@@ -12,7 +12,7 @@ import {
   Stack,
   Text
 } from "@chakra-ui/react";
-import { memo, useCallback, useEffect, useState, VFC } from "react";
+import { memo, useCallback, useEffect, useRef, useState, VFC } from "react";
 
 import { useSaveData } from "../../hooks/useSaveData";
 
@@ -27,6 +27,7 @@ type Store = {
 };
 
 export const ModalNew: VFC<Props> = memo((props) => {
+  const renderFlgRef = useRef(false);
   const { isOpen, onClose } = props;
   const [title, setInputTitle] = useState<string>("");
   const [comment, setInputComment] = useState<string>("");
@@ -49,18 +50,29 @@ export const ModalNew: VFC<Props> = memo((props) => {
     []
   );
 
-  const onClickSaveData = useCallback((title: string, comment: string) => {
-    saveData({ title, comment });
-
-    setInputTitle("");
-    setInputComment("");
-  }, []);
+  const onClickSaveData = useCallback(
+    ({ title, comment }) => {
+      // console.log(title);
+      saveData({ title, comment });
+      setInputTitle("");
+      setInputComment("");
+    },
+    [saveData]
+  );
 
   useEffect(() => {
-    const latestData = [...dataStore, newData];
-    setDataStore(latestData);
-    // console.log(latestData);
-  }, [newData]);
+    if (renderFlgRef.current) {
+      if (!dataStore) {
+        const newStore = [newData];
+        setDataStore(newStore);
+      } else {
+        const newStore = [...dataStore, newData];
+        setDataStore(newStore);
+      }
+    } else {
+      renderFlgRef.current = true;
+    }
+  }, [onClickSaveData, newData]);
 
   console.log(dataStore);
 
@@ -88,7 +100,7 @@ export const ModalNew: VFC<Props> = memo((props) => {
                 onChange={handleChangeCom}
               />
             </FormControl>
-            <Button onClick={() => onClickSaveData(title, comment)}>
+            <Button onClick={() => onClickSaveData({ title, comment })}>
               登録
             </Button>
             <Text>{newData?.title}</Text>
