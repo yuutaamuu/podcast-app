@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 
 type Data = {
-  // id: number;
+  id: number;
   img: string;
   title: string;
   comment: string;
@@ -9,15 +9,16 @@ type Data = {
 
 export const useSaveData = () => {
   const [newData, setNewData] = useState<Data>({
+    id: 0,
     img: "",
     title: "",
     comment: ""
   });
 
   const saveData = useCallback((props: Data) => {
-    const { img, title, comment } = props;
+    const { id, img, title, comment } = props;
     const data = {
-      // id: id,
+      id: id,
       img: img,
       title: title,
       comment: comment

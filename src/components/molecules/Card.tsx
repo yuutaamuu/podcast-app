@@ -1,5 +1,6 @@
 import { Box, Button, Image, Stack, Text } from "@chakra-ui/react";
 import { memo, VFC } from "react";
+import { useGetData } from "../../hooks/useGetData";
 
 type Data = {
   id: number;
@@ -10,6 +11,7 @@ type Data = {
 
 export const Card: VFC<Data> = memo((props) => {
   const { id, img, title, onClickModal } = props;
+  // const { latestData } = useGetData();
   return (
     <Box
       w={{ base: "100%", sm: "45%", md: "30%" }}

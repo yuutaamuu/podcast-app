@@ -12,10 +12,18 @@ import {
   Stack,
   Text
 } from "@chakra-ui/react";
-import { memo, useCallback, useEffect, useRef, useState, VFC } from "react";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  VFC
+} from "react";
 
 import { useSaveData } from "../../hooks/useSaveData";
-import store from "../../store/store";
+import { useGetData } from "../../hooks/useGetData";
 
 type Props = {
   isOpen: boolean;
@@ -23,7 +31,7 @@ type Props = {
 };
 
 type Store = {
-  // id: number;
+  id: number;
   img: string;
   title: string;
   comment: string;
@@ -34,12 +42,14 @@ export const ModalNew: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
   const [title, setInputTitle] = useState<string>("");
   const [comment, setInputComment] = useState<string>("");
-  // const [id, setArrId] = useState<number>(0);
+  const [id, setArrId] = useState<number>(0);
+  const [nextId, setArrNextId] = useState<number>(4);
   const [img, setArrImg] = useState<string>(
     "https://source.unsplash.com/random"
   );
+  const { latestData, setData } = useGetData();
 
-  const [dataStore, setDataStore] = useState<Array<Store>>([]);
+  // const [dataStore, setDataStore] = useState<Array<Store>>([]);
 
   const { newData, saveData } = useSaveData();
 
@@ -58,31 +68,34 @@ export const ModalNew: VFC<Props> = memo((props) => {
   );
 
   const onClickSaveData = useCallback(
-    ({ img, title, comment }) => {
-      // console.log(title);
-      saveData({ img, title, comment });
+    ({ id, img, title, comment }) => {
+      saveData({ id, img, title, comment });
       setInputTitle("");
       setInputComment("");
+      setArrId((prevId) => prevId + 1);
     },
     [saveData]
   );
 
   useEffect(() => {
+    setArrId((prevId) => prevId + 1);
+  }, []);
+
+  useEffect(() => {
     if (renderFlgRef.current) {
-      if (!dataStore) {
+      if (!latestData) {
         const newStore = [newData];
-        setDataStore(newStore);
-        dispatch(store.getState() === newStore);
+        // addData(newStore);
+        setData(newStore);
       } else {
-        const newStore = [...dataStore, newData];
-        setDataStore(newStore);
+        const newStore = [...latestData, newData];
+        // addData(newStore);
+        setData(newStore);
       }
     } else {
       renderFlgRef.current = true;
     }
   }, [onClickSaveData, newData]);
-
-  console.log(dataStore);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} autoFocus={false}>
@@ -108,7 +121,9 @@ export const ModalNew: VFC<Props> = memo((props) => {
                 onChange={handleChangeCom}
               />
             </FormControl>
-            <Button onClick={() => onClickSaveData({ img, title, comment })}>
+            <Button
+              onClick={() => onClickSaveData({ id, img, title, comment })}
+            >
               登録
             </Button>
             <Text>{newData?.title}</Text>

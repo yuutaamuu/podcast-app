@@ -9,8 +9,11 @@ import {
   Text
 } from "@chakra-ui/react";
 import { memo, VFC } from "react";
+import { useGetData } from "../../hooks/useGetData";
 
 type Data = {
+  id: number;
+  img: string;
   title: string;
   comment: string;
 };
@@ -18,6 +21,8 @@ type Data = {
 type Props = {
   isOpen: boolean;
   onClose: () => void;
+  // id: number;
+  // img: string;
   title?: string;
   comment?: string;
 };

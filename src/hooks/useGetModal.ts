@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+// import { useGetData } from "./useGetData";
 
 type Data = {
   id: number;
@@ -9,15 +10,15 @@ type Data = {
 
 type Props = {
   id: number;
-  datas: Array<Data>;
+  latestData: Array<Data>;
 };
 
 export const useGetModal = () => {
-  const [modalData, setModalData] = useState<Data | null>();
+  const [modalData, setModalData] = useState<Data>();
 
   const getData = useCallback((props: Props) => {
-    const { id, datas } = props;
-    const targetData = datas.find((data) => data.id === id);
+    const { id, latestData } = props;
+    const targetData = latestData.find((data) => data.id === id);
     setModalData(targetData);
   }, []);
 

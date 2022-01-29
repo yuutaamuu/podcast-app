@@ -2,13 +2,14 @@ import { ChakraProvider, Text } from "@chakra-ui/react";
 import "./styles.css";
 
 import { Top } from "./components/pages/Top";
-import store from "./store/store";
+import { DataProvider } from "./store/storeProvider";
 
 export default function App() {
-  console.log(store.getState());
   return (
     <ChakraProvider>
-      <Top />
+      <DataProvider>
+        <Top />
+      </DataProvider>
     </ChakraProvider>
   );
 }
