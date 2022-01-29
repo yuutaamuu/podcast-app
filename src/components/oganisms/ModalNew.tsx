@@ -15,6 +15,7 @@ import {
 import { memo, useCallback, useEffect, useRef, useState, VFC } from "react";
 
 import { useSaveData } from "../../hooks/useSaveData";
+import store from "../../store/store";
 
 type Props = {
   isOpen: boolean;
@@ -22,6 +23,8 @@ type Props = {
 };
 
 type Store = {
+  // id: number;
+  img: string;
   title: string;
   comment: string;
 };
@@ -31,6 +34,10 @@ export const ModalNew: VFC<Props> = memo((props) => {
   const { isOpen, onClose } = props;
   const [title, setInputTitle] = useState<string>("");
   const [comment, setInputComment] = useState<string>("");
+  // const [id, setArrId] = useState<number>(0);
+  const [img, setArrImg] = useState<string>(
+    "https://source.unsplash.com/random"
+  );
 
   const [dataStore, setDataStore] = useState<Array<Store>>([]);
 
@@ -51,9 +58,9 @@ export const ModalNew: VFC<Props> = memo((props) => {
   );
 
   const onClickSaveData = useCallback(
-    ({ title, comment }) => {
+    ({ img, title, comment }) => {
       // console.log(title);
-      saveData({ title, comment });
+      saveData({ img, title, comment });
       setInputTitle("");
       setInputComment("");
     },
@@ -65,6 +72,7 @@ export const ModalNew: VFC<Props> = memo((props) => {
       if (!dataStore) {
         const newStore = [newData];
         setDataStore(newStore);
+        dispatch(store.getState() === newStore);
       } else {
         const newStore = [...dataStore, newData];
         setDataStore(newStore);
@@ -100,7 +108,7 @@ export const ModalNew: VFC<Props> = memo((props) => {
                 onChange={handleChangeCom}
               />
             </FormControl>
-            <Button onClick={() => onClickSaveData({ title, comment })}>
+            <Button onClick={() => onClickSaveData({ img, title, comment })}>
               登録
             </Button>
             <Text>{newData?.title}</Text>

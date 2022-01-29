@@ -2,17 +2,23 @@ import { useCallback, useState } from "react";
 
 type Data = {
   // id: number;
-  // img: string;
+  img: string;
   title: string;
   comment: string;
 };
 
 export const useSaveData = () => {
-  const [newData, setNewData] = useState<Data>({ title: "", comment: "" });
+  const [newData, setNewData] = useState<Data>({
+    img: "",
+    title: "",
+    comment: ""
+  });
 
   const saveData = useCallback((props: Data) => {
-    const { title, comment } = props;
+    const { img, title, comment } = props;
     const data = {
+      // id: id,
+      img: img,
       title: title,
       comment: comment
     };
