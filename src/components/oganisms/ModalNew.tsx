@@ -49,8 +49,6 @@ export const ModalNew: VFC<Props> = memo((props) => {
   );
   const { latestData, setData } = useGetData();
 
-  // const [dataStore, setDataStore] = useState<Array<Store>>([]);
-
   const { newData, saveData } = useSaveData();
 
   const handleChangeTit = useCallback(
@@ -73,6 +71,7 @@ export const ModalNew: VFC<Props> = memo((props) => {
       setInputTitle("");
       setInputComment("");
       setArrId((prevId) => prevId + 1);
+      onClose();
     },
     [saveData]
   );
@@ -126,8 +125,6 @@ export const ModalNew: VFC<Props> = memo((props) => {
             >
               登録
             </Button>
-            <Text>{newData?.title}</Text>
-            <Text>{newData?.comment}</Text>
           </Stack>
         </ModalBody>
       </ModalContent>

@@ -18,39 +18,13 @@ export const TopCardArea: VFC = memo(() => {
   const { modalData, getData } = useGetModal();
   const { latestData } = useGetData();
 
-  // const datas: Data[] = latestData;
-
-  // const datas: Data[] = [
-  //   {
-  //     id: 1,
-  //     img: "https://source.unsplash.com/random",
-  //     title: "タイトル1です。",
-  //     comment: "ああああああああ"
-  //   },
-  //   {
-  //     id: 2,
-  //     img: "https://source.unsplash.com/random",
-  //     title: "タイトル2です。",
-  //     comment: "いいいいいいい"
-  //   },
-  //   {
-  //     id: 3,
-  //     img: "https://source.unsplash.com/random",
-  //     title: "タイトル3です。",
-  //     comment: "うううううう"
-  //   },
-  //   {
-  //     id: 4,
-  //     img: "https://source.unsplash.com/random",
-  //     title: "タイトル4です。",
-  //     comment: "うううううう"
-  //   }
-  // ];
-
-  const onClickModal = useCallback((id: number) => {
-    getData({ id, latestData });
-    onOpen();
-  }, []);
+  const onClickModal = useCallback(
+    (id: number) => {
+      getData({ id, latestData });
+      onOpen();
+    },
+    [getData, latestData, onOpen]
+  );
 
   return (
     <Box p={6}>

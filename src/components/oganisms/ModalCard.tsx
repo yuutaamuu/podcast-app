@@ -9,7 +9,6 @@ import {
   Text
 } from "@chakra-ui/react";
 import { memo, VFC } from "react";
-import { useGetData } from "../../hooks/useGetData";
 
 type Data = {
   id: number;
