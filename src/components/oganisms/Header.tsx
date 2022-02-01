@@ -9,14 +9,21 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { memo } from "react";
+import { memo, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 
 export const Header = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const history = useHistory();
+  const onClickHome = useCallback(() => history.push("/"), [history]);
+  const onClickAbout = useCallback(() => history.push("/about"), [history]);
+  const onClickList = useCallback(() => history.push("/list"), [history]);
   return (
     <>
       <Flex justify="space-between" p={6} bg="cyan.600">
         <Button
+          onClick={onClickHome}
           as="h1"
           bg="none"
           color="white"
@@ -26,13 +33,13 @@ export const Header = memo(() => {
           Spotifiy
         </Button>
         <Flex align="center" display={{ base: "none", md: "flex" }}>
-          <Button bg="none" color="white">
+          <Button onClick={onClickHome} bg="none" color="white">
             TOP
           </Button>
-          <Button bg="none" color="white">
+          <Button onClick={onClickAbout} bg="none" color="white">
             サービスについて
           </Button>
-          <Button bg="none" color="white">
+          <Button onClick={onClickList} bg="none" color="white">
             一覧
           </Button>
           <Button bg="none" color="white">
