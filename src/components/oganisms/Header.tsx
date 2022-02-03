@@ -19,6 +19,7 @@ export const Header = memo(() => {
   const onClickHome = useCallback(() => history.push("/"), [history]);
   const onClickAbout = useCallback(() => history.push("/about"), [history]);
   const onClickList = useCallback(() => history.push("/list"), [history]);
+  const onClickRegi = useCallback(() => history.push("/register"), [history]);
   return (
     <>
       <Flex justify="space-between" p={6} bg="cyan.600">
@@ -42,7 +43,7 @@ export const Header = memo(() => {
           <Button onClick={onClickList} bg="none" color="white">
             一覧
           </Button>
-          <Button bg="none" color="white">
+          <Button onClick={onClickRegi} bg="none" color="white">
             登録
           </Button>
         </Flex>
@@ -61,16 +62,16 @@ export const Header = memo(() => {
           <DrawerCloseButton autoFocus={false} />
           <DrawerBody py={12}>
             <Flex flexDirection="column">
-              <Button bg="none" color="gray">
+              <Button onClick={onClickHome} bg="none" color="gray">
                 TOP
               </Button>
-              <Button bg="none" color="gray">
+              <Button onClick={onClickAbout} bg="none" color="gray">
                 サービスについて
               </Button>
-              <Button bg="none" color="gray">
+              <Button onClick={onClickList} bg="none" color="gray">
                 一覧
               </Button>
-              <Button bg="none" color="gray">
+              <Button onClick={onClickRegi} bg="none" color="gray">
                 登録
               </Button>
             </Flex>

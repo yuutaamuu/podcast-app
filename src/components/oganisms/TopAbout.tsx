@@ -18,7 +18,11 @@ export const TopAbout = memo(() => {
         About
       </Heading>
       <Box>
-        <Text>自分が聞いたpodcastのメモを取りましょう。</Text>
+        <Text>
+          気になるPodCastの番組や聴いたことをメモするアプリケーションです。
+          <br />
+          登録できるのは、番組のタイトル・コメント・イメージ画像となっています。PodCastを生活の一部にして楽しみましょう。
+        </Text>
       </Box>
       <Center p={8}>
         <Button onClick={onOpen}>新規登録</Button>

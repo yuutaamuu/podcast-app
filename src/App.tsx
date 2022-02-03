@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Top } from "./components/pages/Top";
 import { About } from "./components/pages/About";
 import { List } from "./components/pages/List";
+import { Regi } from "./components/pages/Regi";
 import { DataProvider } from "./store/storeProvider";
 
 export default function App() {
@@ -22,6 +23,9 @@ export default function App() {
             </Route>
             <Route path="/list">
               <List />
+            </Route>
+            <Route path="/register">
+              <Regi />
             </Route>
           </Switch>
         </DataProvider>
